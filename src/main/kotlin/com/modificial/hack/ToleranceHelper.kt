@@ -1,7 +1,7 @@
 package com.modificial.hack
 
 /**
- * Created by chenliang on 2017/12/31.
+ * Created by modificial on 2017/12/31.
  */
 object ToleranceHelper {
 

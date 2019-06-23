@@ -8,13 +8,13 @@ import java.io.InputStream
 import javax.imageio.ImageIO
 
 /**
- * Created by chenliang on 2017/12/31.
+ * Created by modificial on 2017/12/31.
  */
 object ImgLoader {
 
     @Throws(IOException::class)
     fun load(path: String): BufferedImage? {
-        var image: BufferedImage? = null
+        var image: BufferedImage?
         var `is`: InputStream? = null
         try {
             `is` = BufferedInputStream(FileInputStream(path))

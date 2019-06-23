@@ -8,11 +8,11 @@ import java.util.*
 import javax.imageio.ImageIO
 
 /**
- * Created by chenliang on 2018/1/1.
+ * Created by modificial on 2018/1/1.
  */
 class NextCenterFinder {
 
-    internal var bottleFinder = BottleFinder()
+    private var bottleFinder = BottleFinder()
 
     fun find(image: BufferedImage?, myPos: IntArray?): IntArray? {
         if (image == null) {
@@ -28,7 +28,7 @@ class NextCenterFinder {
         val map = HashMap<Int, Int>()
         for (i in 0 until width) {
             pixel = image.getRGB(i, height - 1)
-            map[pixel] = (map as java.util.Map<Int, Int>).getOrDefault(pixel, 0) + 1
+            map[pixel] = (map as Map<Int, Int>).getOrDefault(pixel, 0) + 1
         }
         var max = 0
         for ((key, value) in map) {
@@ -50,8 +50,8 @@ class NextCenterFinder {
         val minB = Integer.min(b1, b2) - t
         val maxB = Integer.max(b1, b2) + t
 
-        println(minR.toString() + ", " + minG + ", " + minB)
-        println(maxR.toString() + ", " + maxG + ", " + maxB)
+        println("$minR, $minG, $minB")
+        println("$maxR, $maxG, $maxB")
 
         val ret = IntArray(6)
         var targetR = 0
@@ -72,7 +72,7 @@ class NextCenterFinder {
                     val g = pixel and 0xff00 shr 8
                     val b = pixel and 0xff
                     if (r < minR || r > maxR || g < minG || g > maxG || b < minB || b > maxB) {
-                        j = j + 2
+                        j += 2
                         ret[0] = i
                         ret[1] = j
                         println("top, x: $i, y: $j")
@@ -178,7 +178,7 @@ class NextCenterFinder {
         fun main(strings: Array<String>) {
             //  int[] excepted = {0, 0};
             val t = NextCenterFinder()
-            val root = t.javaClass.getResource("/").getPath()
+            val root = t.javaClass.getResource("/").path
             println("root: $root")
             val imgsSrc = root + "imgs/src"
             val imgsDesc = root + "imgs/next_center"
@@ -188,7 +188,7 @@ class NextCenterFinder {
             var cost: Long = 0
             for (file in srcDir.listFiles()!!) {
                 println(file)
-                val img = ImgLoader.load(file.getAbsolutePath())
+                val img = ImgLoader.load(file.absolutePath)
                 val t1 = System.nanoTime()
                 val myPos = myPosFinder.find(img)
                 val pos = t.find(img, myPos)
@@ -206,7 +206,7 @@ class NextCenterFinder {
                 } else {
                     g.fillRect(pos[0], pos[1] + 36, 10, 10)
                 }
-                val descFile = File(imgsDesc, file.getName())
+                val descFile = File(imgsDesc, file.name)
                 if (!descFile.exists()) {
                     descFile.mkdirs()
                     descFile.createNewFile()

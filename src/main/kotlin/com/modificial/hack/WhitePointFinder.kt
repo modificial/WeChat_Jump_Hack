@@ -4,8 +4,9 @@ import java.awt.image.BufferedImage
 import java.util.*
 
 /**
- * Created by chenliang on 2017/12/31.
+ * Created by modificial on 2017/12/31.
  */
+@Suppress("NAME_SHADOWING")
 class WhitePointFinder {
 
     fun find(image: BufferedImage?, x1: Int, y1: Int, x2: Int, y2: Int): IntArray? {
@@ -65,7 +66,7 @@ class WhitePointFinder {
                     }
 
                     println("whitePoint: $maxX, $minX, $maxY, $minY")
-                    return if (maxX - minX <= 45 && maxX - minX >= 35 && maxY - minY <= 30 && maxY - minY >= 20) {
+                    return if (maxX - minX in 35..45 && maxY - minY <= 30 && maxY - minY >= 20) {
                         intArrayOf((minX + maxX) / 2, (minY + maxY) / 2)
                     } else {
                         null
@@ -79,7 +80,7 @@ class WhitePointFinder {
 
     companion object {
 
-        val TARGET = 245
+        const val TARGET = 245
 
         fun buildArray(i: Int, j: Int): IntArray {
             return intArrayOf(i, j)

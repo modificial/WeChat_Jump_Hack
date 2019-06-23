@@ -1,13 +1,13 @@
 package com.modificial.hack
 
 import java.awt.image.BufferedImage
-import java.util.ArrayDeque
-import java.util.Queue
+import java.util.*
 
 /**
  * 瓶子的下一步位置计算
- * Created by chenliang on 2017/12/31.
+ * Created by modificial on 2017/12/31.
  */
+@Suppress("NAME_SHADOWING")
 class BottleFinder {
 
     fun find(image: BufferedImage?, i: Int, j: Int): IntArray? {
@@ -77,7 +77,7 @@ class BottleFinder {
 
     companion object {
 
-        val TARGET = 255
+        const val TARGET = 255
 
         fun buildArray(i: Int, j: Int): IntArray {
             return intArrayOf(i, j)

@@ -7,7 +7,7 @@ import java.io.IOException
 import javax.imageio.ImageIO
 
 /**
- * Created by chenliang on 2018/1/1.
+ * Created by modificial on 2018/1/1.
  */
 object HackTest {
 
@@ -16,7 +16,7 @@ object HackTest {
     @JvmStatic
     fun main(strings: Array<String>) {
         val t = HackTest
-        val root = t.javaClass.getResource("/").getPath()
+        val root = t.javaClass.getResource("/").path
         println("root: $root")
         val imgsSrc = root + "imgs/input"
         val imgsDesc = root + "imgs/output"
@@ -29,7 +29,7 @@ object HackTest {
         val cost: Long = 0
         for (file in srcDir.listFiles()!!) {
             println(file)
-            val img = ImgLoader.load(file.getAbsolutePath())
+            val img = ImgLoader.load(file.absolutePath)
             val myPos = myPosFinder.find(img)
             val nextCenter = nextCenterFinder.find(img, myPos)
             if (nextCenter == null || nextCenter[0] == 0) {
@@ -40,8 +40,8 @@ object HackTest {
                 val centerY: Int
                 val whitePoint = whitePointFinder.find(img, nextCenter[0] - 120, nextCenter[1], nextCenter[0] + 120, nextCenter[1] + 180)
                 if (whitePoint != null) {
-                    centerX = whitePoint!![0]
-                    centerY = whitePoint!![1]
+                    centerX = whitePoint[0]
+                    centerY = whitePoint[1]
                     println("find whitePoint, succ, ($centerX, $centerY)")
                 } else {
                     if (nextCenter[2] != Integer.MAX_VALUE && nextCenter[4] != Integer.MIN_VALUE) {
@@ -53,9 +53,9 @@ object HackTest {
                     }
                 }
                 println("find nextCenter, succ, ($centerX, $centerY)")
-                val desc = BufferedImage(img!!.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB)
+                val desc = BufferedImage(img!!.width, img.height, BufferedImage.TYPE_INT_RGB)
                 val g = desc.graphics
-                g.drawImage(img, 0, 0, img!!.getWidth(), img.getHeight(), null)
+                g.drawImage(img, 0, 0, img.width, img.height, null)
                 g.color = Color.RED
                 g.fillRect(myPos!![0] - 5, myPos[1] - 5, 10, 10)
                 g.color = Color.GREEN

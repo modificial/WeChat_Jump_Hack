@@ -6,7 +6,7 @@ import java.io.IOException
 import javax.imageio.ImageIO
 
 /**
- * Created by chenliang on 2017/12/31.
+ * Created by modificial on 2017/12/31.
  */
 class MyPosFinder {
 
@@ -38,7 +38,7 @@ class MyPosFinder {
         }
         ret[0] = (maxX + minX) / 2 + 3
         ret[1] = maxY
-        println(maxX.toString() + ", " + minX)
+        println("$maxX, $minX")
         println("pos, x: " + ret[0] + ", y: " + ret[1])
         return ret
     }
@@ -55,7 +55,7 @@ class MyPosFinder {
         @JvmStatic
         fun main(strings: Array<String>) {
             val t = MyPosFinder()
-            val root = t.javaClass.getResource("/").getPath()
+            val root = t.javaClass.getResource("/").path
             println("root: $root")
             val imgsSrc = root + "imgs/src"
             val imgsDesc = root + "imgs/my_pos"
@@ -63,11 +63,11 @@ class MyPosFinder {
             println(srcDir)
             var cost: Long = 0
             for (file in srcDir.listFiles()!!) {
-                if (!file.getName().endsWith(".png")) {
+                if (!file.name.endsWith(".png")) {
                     continue
                 }
                 println(file)
-                val img = ImgLoader.load(file.getAbsolutePath())
+                val img = ImgLoader.load(file.absolutePath)
                 val t1 = System.nanoTime()
                 val pos = t.find(img)
                 val t2 = System.nanoTime()
@@ -75,7 +75,7 @@ class MyPosFinder {
                 val desc = BufferedImage(img!!.width, img.height, BufferedImage.TYPE_INT_RGB)
                 desc.graphics.drawImage(img, 0, 0, img.width, img.height, null) // 绘制缩小后的图
                 desc.graphics.drawRect(pos!![0] - 5, pos[1] - 5, 10, 10)
-                val descFile = File(imgsDesc, file.getName())
+                val descFile = File(imgsDesc, file.name)
                 if (!descFile.exists()) {
                     descFile.mkdirs()
                     descFile.createNewFile()

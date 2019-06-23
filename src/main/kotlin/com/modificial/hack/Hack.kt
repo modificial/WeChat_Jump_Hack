@@ -8,27 +8,27 @@ import java.io.File
 import java.util.*
 
 /**
- * Created by chenliang on 2018/1/1.
+ * Created by modificial on 2018/1/1.
  */
 object Hack {
 
 
-    internal val ADB_PATH = "D:/Android/Sdk/platform-tools/adb"
+    private const val ADB_PATH = "D:/Android/Sdk/platform-tools/adb"
 
     /**
      * 弹跳系数，现在已经会自动适应各种屏幕，请不要修改。
      */
-    internal val JUMP_RATIO = 1.380
+    private const val JUMP_RATIO = 1.380
 
     private val RANDOM = Random()
 
     @JvmStatic
     fun main(strings: Array<String>) {
-        val root = Hack::class.java!!.getResource("/").getPath()
+        val root = Hack::class.java.getResource("/").path
         println("root: $root")
         val srcDir = File(root, "imgs/input")
         srcDir.mkdirs()
-        println("srcDir: " + srcDir.getAbsolutePath())
+        println("srcDir: " + srcDir.absolutePath)
         val myPosFinder = MyPosFinder()
         val nextCenterFinder = NextCenterFinder()
         val whitePointFinder = WhitePointFinder()
@@ -38,17 +38,17 @@ object Hack {
         for (i in 0..4999) {
             try {
                 total++
-                val file = File(srcDir, i.toString() + ".png")
+                val file = File(srcDir, "$i.png")
                 if (file.exists()) {
                     file.deleteOnExit()
                 }
                 var process = Runtime.getRuntime().exec("$ADB_PATH shell /system/bin/screencap -p /sdcard/screenshot.png")
                 process.waitFor()
-                process = Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.getAbsolutePath())
+                process = Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.absolutePath)
                 process.waitFor()
 
-                println("screenshot, file: " + file.getAbsolutePath())
-                val image = ImgLoader.load(file.getAbsolutePath())
+                println("screenshot, file: " + file.absolutePath)
+                val image = ImgLoader.load(file.absolutePath)
                 if (jumpRatio == 0.0) {
                     jumpRatio = JUMP_RATIO * 1080 / image!!.width
                 }
